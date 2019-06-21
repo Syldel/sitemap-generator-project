@@ -15,9 +15,10 @@ generator.on('done', () => {
     // sitemaps created
     console.log('SitemapGenerator done!');
 
-    fs.readFile('./sitemap.xml', function(err, data) {
+    fs.readFile('./sitemap.xml', (err, data) => {
         if (err) {
             console.error(err);
+            return;
         }
 
         let json = JSON.parse(parser.toJson(data, {reversible: true}));

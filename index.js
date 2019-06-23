@@ -10,7 +10,7 @@ const generator = SitemapGenerator('https://www.test-site.fr', {
     priorityMap: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0],
     ignore: url => {
         // Prevent URLs from being added that contain `<pattern>`.
-        return /[^>]+sitemap.xml/g.test(url)
+        return /[^>]+sitemap.xml/g.test(url);
     }
 });
 
@@ -25,8 +25,8 @@ generator.on('done', () => {
             return;
         }
 
-        let json = JSON.parse(parser.toJson(data, {reversible: true}));
-        console.log('urls:', json["urlset"]["url"].length);
+        let json = JSON.parse(parser.toJson(data, { reversible: true }));
+        console.log('urls:', json.urlset.url.length);
     });
 });
 

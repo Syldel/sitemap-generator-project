@@ -2,6 +2,8 @@ const SitemapGenerator = require('sitemap-generator');
 const fs = require('fs');
 const parser = require('xml2json');
 
+let count = 0;
+
 // create generator
 const generator = SitemapGenerator('https://www.test-site.fr', {
     stripQuerystring: true,
@@ -11,7 +13,10 @@ const generator = SitemapGenerator('https://www.test-site.fr', {
     ignore: url => {
         // Prevent URLs from being added that contain `<pattern>`.
         return /[^>]+sitemap.xml/g.test(url);
-    }
+    },
+    interval: 1000, // 1s (default: 250)
+    maxConcurrency: 3, // Maximum number of requests the crawler will run simultaneously (default: 5)
+    timeout: 60000 // (default: 30000)
 });
 
 // register event listeners
@@ -31,8 +36,9 @@ generator.on('done', () => {
 });
 
 generator.on('add', (url) => {
+    count++;
     // log url
-    console.log('add url:', url);
+    console.log(count + ' - add url: ' + url);
 });
 
 generator.on('error', (error) => {
